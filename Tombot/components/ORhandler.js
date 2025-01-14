@@ -1,6 +1,5 @@
 'use strict';
 
-const Locations = require("../data/locations.json");
 
 module.exports = {
   metadata: {
@@ -101,7 +100,36 @@ module.exports = {
         context.logger().info(`Líneas generadas: ${JSON.stringify(generatedLines)}`);
         context.addMessage(`Líneas generadas: ${JSON.stringify(generatedLines)}`);
 
+        let orderReleasePayload = {
+          sourceLocation: context.getItemValue("SourceLoc").value,
+          destinationLocation: context.getItemValue("DestinationLoc").value,
+          earlyPickupDate: context.getItemValue("EPD").value,
+          lateDeliveryDate: context.getItemValue("LDD").value,
+          orderConfig: orderConfig,
+          releaseAttribute: releaseAttLV,
+          splittable: context.getItemValue("Splittable (mapeado)"),
+          lineItems: {},
+        };
+        
+        let confirmationMessage = `
+Por favor, confirme los datos ingresados:
+- **ID del SP:** ${storedProcedureId}
+- **Origen:** ${orderReleasePayload.sourceLocation}
+- **Destino:** ${orderReleasePayload.destinationLocation}
+- **Fecha de retiro temprana:** ${orderReleasePayload.earlyPickupDate}
+- **Fecha de entrega tardía:** ${orderReleasePayload.lateDeliveryDate}
+- **Configuración de orden:** ${orderReleasePayload.orderConfig}
+- **Atributo de liberación:** ${orderReleasePayload.releaseAttribute}
+- **Divisible:** ${orderReleasePayload.splittable === "Y" ? "Sí" : "No"}
+- **Líneas de la orden:**
+`;
 
+Object.entries(orderReleasePayload.lineItems).forEach(([lineName, line]) => {
+  confirmationMessage += `  - ${lineName}: Producto "${line.ID}", Cantidad: ${line.quantity}\n`;
+});
+
+// Mostrar mensaje al usuario
+context.reply(confirmationMessage);
 
       },
     },
