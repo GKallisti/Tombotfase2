@@ -1,0 +1,133 @@
+{
+    "orderReleaseXid": "20250116-0001",
+    "orderReleaseTypeGid": "CUSTOMER_ORDER",
+    "isTemplate": false,
+    "sourceLocation": {
+        "links": [
+            {
+                "rel": "self",
+                "href": "https://otmgtm-test-mycotm.otmgtm.us-ashburn-1.ocs.oraclecloud.com:443/logisticsRestApi/resources-int/v2/orderReleases/ONET.20250116-0001/sourceLocation"
+            },
+            {
+                "rel": "canonical",
+                "href": "https://otmgtm-test-mycotm.otmgtm.us-ashburn-1.ocs.oraclecloud.com:443/logisticsRestApi/resources-int/v2/locations/ONET.NECOCHEA"
+            }
+        ]
+    },
+    "destinationLocation": {
+        "links": [
+            {
+                "rel": "self",
+                "href": "https://otmgtm-test-mycotm.otmgtm.us-ashburn-1.ocs.oraclecloud.com:443/logisticsRestApi/resources-int/v2/orderReleases/ONET.20250116-0001/destinationLocation"
+            },
+            {
+                "rel": "canonical",
+                "href": "https://otmgtm-test-mycotm.otmgtm.us-ashburn-1.ocs.oraclecloud.com:443/logisticsRestApi/resources-int/v2/locations/ONET.TANDIL"
+            }
+        ]
+    },
+    "shipUnitOrigin": "RL",
+    "totalWeight": {
+        "value": 249210.538704,
+        "unit": "LB"
+    },
+    "totalVolume": {
+        "value": 8475.520008,
+        "unit": "CUFT"
+    },
+    "totalItemPackageCount": 9700,
+    "totalNetWeight": {
+        "value": 249210.538704,
+        "unit": "LB"
+    },
+    "totalNetVolume": {
+        "value": 8475.520008,
+        "unit": "CUFT"
+    },
+    "totalShipUnitCount": 3,
+    "pickupIsAppt": false,
+    "deliveryIsAppt": false,
+    "isKnownShipper": false,
+    "releaseMethodGid": "AUTO_CALC",
+    "locAmount": {
+        "value": 0.0,
+        "currency": "USD"
+    },
+    "secondaryTWeight": {
+        "value": 0.0,
+        "unit": "LB"
+    },
+    "secondaryTVolume": {
+        "value": 0.0,
+        "unit": "CUFT"
+    },
+    "mustShipDirect": false,
+    "mustShipThruXDock": false,
+    "mustShipThruPool": false,
+    "isLocRequired": false,
+    "customerUnitizationRequest": false,
+    "isLocStale": false,
+    "bundlingType": "AUTOMATIC",
+    "isConsolidateOrEquipment": false,
+    "dutyPaid": "NA",
+    "totalDeclaredValue": {
+        "value": 0.0,
+        "currency": "USD"
+    },
+    "isIgnoreLocationCalendar": false,
+    "onRtExecution": false,
+    "isSplittable": true,
+    "otmVersion": "6.0",
+    "priority": 1,
+    "domainName": "ONET",
+    "isPreEnteredPu": false,
+    "isTopoff": false,
+    "updateDate": {
+        "value": "2025-01-16T15:56:29Z"
+    },
+    "insertDate": {
+        "value": "2025-01-16T15:56:27Z"
+    },
+    "lines": {
+        "links": [
+            {
+                "rel": "self",
+                "href": "https://otmgtm-test-mycotm.otmgtm.us-ashburn-1.ocs.oraclecloud.com:443/logisticsRestApi/resources-int/v2/orderReleases/ONET.20250116-0001/lines"
+            }
+        ]
+    },
+    "statuses": {
+        "links": [
+            {
+                "rel": "self",
+                "href": "https://otmgtm-test-mycotm.otmgtm.us-ashburn-1.ocs.oraclecloud.com:443/logisticsRestApi/resources-int/v2/orderReleases/ONET.20250116-0001/statuses"
+            }
+        ]
+    },
+    "refnums": {
+        "links": [
+            {
+                "rel": "self",
+                "href": "https://otmgtm-test-mycotm.otmgtm.us-ashburn-1.ocs.oraclecloud.com:443/logisticsRestApi/resources-int/v2/orderReleases/ONET.20250116-0001/refnums"
+            }
+        ]
+    },
+    "shipUnits": {
+        "links": [
+            {
+                "rel": "self",
+                "href": "https://otmgtm-test-mycotm.otmgtm.us-ashburn-1.ocs.oraclecloud.com:443/logisticsRestApi/resources-int/v2/orderReleases/ONET.20250116-0001/shipUnits"
+            }
+        ]
+    },
+    "links": [
+        {
+            "rel": "self",
+            "href": "https://otmgtm-test-mycotm.otmgtm.us-ashburn-1.ocs.oraclecloud.com:443/logisticsRestApi/resources-int/v2/orderReleases/ONET.20250116-0001"
+        },
+        {
+            "rel": "canonical",
+            "href": "https://otmgtm-test-mycotm.otmgtm.us-ashburn-1.ocs.oraclecloud.com:443/logisticsRestApi/resources-int/v2/orderReleases/ONET.20250116-0001"
+        }
+    ]
+}
