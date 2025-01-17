@@ -1,0 +1,34 @@
+{
+    "transactions": {
+        "items": [
+            {
+                "httpMethod": "POST",
+                "contentType": "application/vnd.oracle.resource+json; type=singular",
+                "resourceUrl": "/orderReleases",
+                "body": {
+                    "domainName": "ONET",
+                    "orderReleaseXid": "TOMBOTTESTOR",
+                    "orderReleaseGid": "ONET.TOMBOTTESTOR",
+                    "orderReleaseName": "TOMBOTTESTOR",
+                    "orderReleaseTypeGid": "CUSTOMER_ORDER",
+                    "sourceLocationGid": "ONET.TANDIL",
+                    "destLocationGid": "ONET.NECOCHEA",
+                    "releaseMethodGid": "AUTO_CALC",
+					"isSplittable": true,
+                    "lines": {
+                        "items": [
+                            {
+                                "domainName": "ONET",
+                                "itemPackageCount": 500,
+                                "orderReleaseGid": "ONET.TOMBOTTESTOR",
+                                "orderReleaseLineGid": "ONET.TOMBOTTESTOR-001",
+                                "orderReleaseLineXid": "TOMBOTTESTOR-001",
+                                "packagedItemGid": "ONET.BOOTS"
+                            }
+                        ]
+                    }
+                }
+            }
+            ]
+        }
+}
