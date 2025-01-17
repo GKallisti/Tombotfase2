@@ -1,0 +1,27 @@
+            {
+                "httpMethod": "POST",
+                "contentType": "application/vnd.oracle.resource+json; type=singular",
+                "resourceUrl": "/orderReleases",
+                "body": {
+                    "domainName": "ONET",
+                    "orderReleaseXid": "OR-TEST-TOMBOT",
+                    "orderReleaseGid": "ONET.OR-TEST-TOMBOT",
+                    "orderReleaseName": "TOR-TEST-TOMBOT",
+                    "sourceLocationGid": "ONET.TANDIL",
+                    "destLocationGid": "ONET.NECOCHEA",
+                    "releaseMethodGid": "ONET.AUTO_CALC",
+					"isSplittable": true,                  
+                    "lines": {
+                        "items": [
+                            {
+                                "domainName": "ONET",
+                                "itemPackageCount": 500,
+                                "orderReleaseGid": "ONET.OR-TEST-TOMBOT",
+                                "orderReleaseLineGid": "ONET.OR-TEST-TOMBOT-1-0001",
+                                "orderReleaseLineXid": "OR-TEST-TOMBOT-1-0001",
+                                "packagedItemGid": "ONET.REFRESCO"
+                            }
+                        ]
+                    }
+                }
+            }
