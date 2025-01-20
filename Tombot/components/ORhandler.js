@@ -1,6 +1,5 @@
 'use strict';
 
-
 module.exports = {
   metadata: {
     name: 'ORhandler',
@@ -15,20 +14,19 @@ module.exports = {
        * @param {EntityResolutionContext} context
        */
       resolved: async (event, context) => {
-        let ORData = context.getVariable('skill.ORData');
-        let SourceLocation = context.getItemValue("SourceLoc");
-        let DestinationLocation = context.getItemValue("DestinationLoc");
         let LineItemLE = context.getItemValue("LineItemLE");
         let Splittable = context.getItemValue("Splittable");
+        let restrain = context.getItemValue("confirmsp"); // confirmsp contiene Yes o No
+        let SP = null;
+
+        // Manejar confirmación de restricciones de proveedor de servicios
+        if (restrain && restrain.value === "Yes") {
+          SP = context.getItemValue("spvl") ? context.getItemValue("spvl").value : null;
+        }
+
         let generatedLines = {};
-       
-        // Crear y asignar valores a las nuevas variables según las cláusulas
-        let orderConfig = "AUTO_CALC";
-        context.logger().info(`orderConfig: ${orderConfig}`);
 
-        let releaseAttLV = "PURCHASE_ORDER";
-        context.logger().info(`releaseAttLV: ${releaseAttLV}`);
-
+        // Mapear el valor de Splittable
         let splittableMapped;
         if (Splittable && Splittable.yesno) {
           splittableMapped = Splittable.yesno.toUpperCase() === "YES" ? "Y" : "N";
@@ -59,52 +57,31 @@ module.exports = {
         } else {
           context.logger().info("LineItemLE es nulo o vacío.");
         }
-        // Loggear las líneas generadas
-        context.logger().info(`Líneas generadas: ${JSON.stringify(generatedLines)}`);
-        context.addMessage(`Líneas generadas: ${JSON.stringify(generatedLines)}`);
 
         let orderReleasePayload = {
           sourceLocation: context.getItemValue("SourceLoc").value,
           destinationLocation: context.getItemValue("DestinationLoc").value,
-          earlyPickupDate: context.getItemValue("EPD").value,
-          lateDeliveryDate: context.getItemValue("LDD").value,
-          orderConfig: orderConfig,
-          releaseAttribute: releaseAttLV,
           splittable: splittableMapped,
           lineItems: generatedLines,
+          serviceProvider: SP || "Sin restricciones de proveedor de servicios"
         };
-        
+
         let confirmationMessage = `
 Por favor, confirme los datos ingresados:
 - **Origen:** ${orderReleasePayload.sourceLocation}
 - **Destino:** ${orderReleasePayload.destinationLocation}
-- **Fecha de retiro temprana:** ${orderReleasePayload.earlyPickupDate}
-- **Fecha de entrega tardía:** ${orderReleasePayload.lateDeliveryDate}
-- **Configuración de orden:** ${orderReleasePayload.orderConfig}
-- **Atributo de liberación:** ${orderReleasePayload.releaseAttribute}
 - **Divisible:** ${orderReleasePayload.splittable === "Y" ? "Sí" : "No"}
-- **Líneas de la orden:**  ${orderReleasePayload.lineItems}
-}
+- **Proveedor de Servicios:** ${orderReleasePayload.serviceProvider}
+- **Líneas de la orden:**
 `;
 
-Object.entries(orderReleasePayload.lineItems).forEach(([lineName, line]) => {
-  confirmationMessage += `  - ${lineName}: Producto "${line.ID}", Cantidad: ${line.quantity}\n`;
-});
-context.logger().info(JSON.stringify(context.getItemValue("EPD").value));
-context.logger().info(JSON.stringify(ORData));
+        Object.entries(orderReleasePayload.lineItems).forEach(([lineName, line]) => {
+          confirmationMessage += `  - ${lineName}: Producto "${line.ID}", Cantidad: ${line.quantity}\n`;
+        });
 
-// Mostrar mensaje al usuario
-context.addMessage(confirmationMessage);
-
-//   The operations from the Business Objects/Order Releases category.
-// Create an Order Release
-// Method: post
-// Path: /orderReleases
-
-
+        // Enviar el mensaje de confirmación
+        context.addMessage(confirmationMessage);
       },
     },
   }
-
 };
-
