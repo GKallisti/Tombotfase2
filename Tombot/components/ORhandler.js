@@ -20,10 +20,12 @@ module.exports = {
         let SP = null;
 
         // Manejar confirmación de restricciones de proveedor de servicios
-        if (restrain && restrain.value === "Yes") {
+        if (restrain && restrain.value == "Yes") {
           SP = context.getItemValue("spvl") ? context.getItemValue("spvl").value : null;
         }
-
+        context.logger().info("SP " + JSON.stringify(SP));
+        context.logger().info("restrain " + JSON.stringify(restrain));
+        
         let generatedLines = {};
 
         // Mapear el valor de Splittable
