@@ -20,8 +20,8 @@ module.exports = {
       const prefix = "TOMBOT-OR-";
       let timestamp = new Date().toISOString().replace(/[:-]/g, "").split(".")[0]; // Generar fecha/hora para el ID
       let orderReleaseId = `${prefix}${timestamp}`;
-      
-      
+
+      // Construcción del cuerpo de la solicitud
       const body = {
         transactions: {
           items: [
@@ -41,12 +41,18 @@ module.exports = {
                 isSplittable: ORData.Splittable.yesno === "YES",
                 lines: {
                   items: ORData.LineItemLE.filter(item => item.type === "PKItemLV").map((lineItem, index) => {
+                    // Buscar el número asociado al ítem
                     const numberItem = ORData.LineItemLE.find(
-                      n => n.type === "Integer" && n.beginOffset === lineItem.beginOffset + lineItem.originalString.length
+                      n => n.type === "Integer" && 
+                           n.beginOffset > lineItem.endOffset // Debe empezar justo después del ítem
                     );
+                    
+                    // Si no se encuentra un número, usar un valor predeterminado (opcional)
+                    const itemPackageCount = numberItem ? parseInt(numberItem.originalString, 10) : 0;
+
                     return {
                       domainName,
-                      itemPackageCount: numberItem ? numberItem.number : 0,
+                      itemPackageCount, // Asignar el número correcto
                       orderReleaseGid: `${domainName}.${orderReleaseId}`,
                       orderReleaseLineGid: `${domainName}.${orderReleaseId}-line${index + 1}`,
                       orderReleaseLineXid: `${orderReleaseId}-line${index + 1}`,

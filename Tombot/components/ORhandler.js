@@ -16,15 +16,13 @@ module.exports = {
       resolved: async (event, context) => {
         let LineItemLE = context.getItemValue("LineItemLE");
         let Splittable = context.getItemValue("Splittable");
-        let restrain = context.getItemValue("confirmsp"); // confirmsp contiene Yes o No
-        let SP = null;
-
+        let restrain = context.getItemValue("ConfirmSp");
+        let SP 
+        
         // Manejar confirmación de restricciones de proveedor de servicios
-        if (restrain && restrain.value == "Yes") {
-          SP = context.getItemValue("spvl") ? context.getItemValue("spvl").value : null;
+        if (restrain.value === "Yes") {
+          SP = context.getItemValue("ServProvId") ? context.getItemValue("ServProvId").value : null;
         }
-        context.logger().info("SP " + JSON.stringify(SP));
-        context.logger().info("restrain " + JSON.stringify(restrain));
         
         let generatedLines = {};
 
@@ -65,6 +63,7 @@ module.exports = {
           destinationLocation: context.getItemValue("DestinationLoc").value,
           splittable: splittableMapped,
           lineItems: generatedLines,
+          restrain : restrain.value,
           serviceProvider: SP || "Sin restricciones de proveedor de servicios"
         };
 
@@ -73,6 +72,7 @@ Por favor, confirme los datos ingresados:
 - **Origen:** ${orderReleasePayload.sourceLocation}
 - **Destino:** ${orderReleasePayload.destinationLocation}
 - **Divisible:** ${orderReleasePayload.splittable === "Y" ? "Sí" : "No"}
+-**Reestricion?:** ${orderReleasePayload.restrain}
 - **Proveedor de Servicios:** ${orderReleasePayload.serviceProvider}
 - **Líneas de la orden:**
 `;
