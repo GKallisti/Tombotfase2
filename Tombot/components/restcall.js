@@ -39,6 +39,11 @@ module.exports = {
                 destLocationGid: `${domainName}.${ORData.DestinationLoc.value}`,
                 releaseMethodGid: "AUTO_CALC",
                 isSplittable: ORData.Splittable.yesno === "YES",
+                ...(ORData.ConfirmSp.value === "Yes" && { // Solo incluir servprov si ConfirmSp es "Yes"
+                  servprov: {
+                    servprovGid: `${domainName}.${ORData.ServProvId.value}`
+                  }
+                }),
                 lines: {
                   items: ORData.LineItemLE.filter(item => item.type === "PKItemLV").map((lineItem, index) => {
                     // Buscar el número asociado al ítem
