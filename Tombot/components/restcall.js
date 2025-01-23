@@ -4,7 +4,7 @@ const fetch = require('node-fetch'); // Usamos fetch para las llamadas REST
 module.exports = {
   metadata: () => ({
     name: 'restcall',
-    supportedActions: []
+    supportedActions: [ 'success']
   }),
 
   invoke: async (context) => {
@@ -38,7 +38,7 @@ module.exports = {
                 sourceLocationGid: `${domainName}.${ORData.SourceLoc.value}`,
                 destLocationGid: `${domainName}.${ORData.DestinationLoc.value}`,
                 releaseMethodGid: "AUTO_CALC",
-                isSplittable: ORData.Splittable.yesno === "YES",
+                isSplittable: ORData.Splittable.yesno === "YES" ? "Y" : "N",
                 ...(ORData.ConfirmSp.value === "Yes" && { // Solo incluir servprov si ConfirmSp es "Yes"
                   servprov: {
                     servprovGid: `${domainName}.${ORData.ServProvId.value}`
@@ -99,9 +99,13 @@ module.exports = {
 
       // Opcionalmente, puedes enviar un mensaje al flujo del bot
       context.reply(`Order release created successfully! Your Order ID is: ${orderReleaseId}`);
+      context.keepTurn(true);
+      context.transition('success');
     } catch (error) {
       context.logger().info("Error occurred:", error.message);
       context.reply("There was an issue creating the order release. Please try again.");
+      context.keepTurn(true);
+      context.transition('success');
     }
   }
 };

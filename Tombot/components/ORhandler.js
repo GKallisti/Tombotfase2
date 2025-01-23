@@ -14,6 +14,10 @@ module.exports = {
        * @param {EntityResolutionContext} context
        */
       resolved: async (event, context) => {
+        let Redo = context.getVariable('skill.Again')
+        context.logger().info(`Redo: ${JSON.stringify(Redo)}`);
+        let ORData = context.getVariable('skill.ORData');
+
         let LineItemLE = context.getItemValue("LineItemLE");
         let Splittable = context.getItemValue("Splittable");
         let restrain = context.getItemValue("ConfirmSp");
@@ -64,23 +68,23 @@ module.exports = {
           splittable: splittableMapped,
           lineItems: generatedLines,
           restrain : restrain.value,
-          serviceProvider: SP || "Sin restricciones de proveedor de servicios"
+          serviceProvider: SP || "Without service provider restrictions"
         };
 
         let confirmationMessage = `
-Por favor, confirme los datos ingresados:
-- **Origen:** ${orderReleasePayload.sourceLocation}
-- **Destino:** ${orderReleasePayload.destinationLocation}
-- **Divisible:** ${orderReleasePayload.splittable === "Y" ? "Sí" : "No"}
--**Reestricion?:** ${orderReleasePayload.restrain}
-- **Proveedor de Servicios:** ${orderReleasePayload.serviceProvider}
-- **Líneas de la orden:**
+Please confirm the entered information:
+- **Source Location:** ${orderReleasePayload.sourceLocation}
+- **DEstination Location:** ${orderReleasePayload.destinationLocation}
+- **It is Splittable?:** ${orderReleasePayload.splittable === "Y" ? "Yes" : "No"}
+-**Does it has constraints?:** ${orderReleasePayload.restrain.value === "Yes" ? "Yes" : "No"}
+- **Service Provider** ${orderReleasePayload.serviceProvider}
+- **Line Items:**
 `;
 
         Object.entries(orderReleasePayload.lineItems).forEach(([lineName, line]) => {
-          confirmationMessage += `  - ${lineName}: Producto "${line.ID}", Cantidad: ${line.quantity}\n`;
+          confirmationMessage += `  - ${lineName}: Packaged Item ID: "${line.ID}", Quantity: ${line.quantity}\n`;
         });
-
+        context.logger().info(`data: ${JSON.stringify(ORData)}`);
         // Enviar el mensaje de confirmación
         context.addMessage(confirmationMessage);
       },
