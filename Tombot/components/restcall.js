@@ -38,7 +38,7 @@ module.exports = {
                 sourceLocationGid: `${domainName}.${ORData.SourceLoc.value}`,
                 destLocationGid: `${domainName}.${ORData.DestinationLoc.value}`,
                 releaseMethodGid: "AUTO_CALC",
-                isSplittable: ORData.Splittable.yesno === "YES" ? "Y" : "N",
+                isSplittable: ORData.Splittable.yesno === "YES" ? true : false,
                 ...(ORData.ConfirmSp.value === "Yes" && { // Solo incluir servprov si ConfirmSp es "Yes"
                   servprov: {
                     servprovGid: `${domainName}.${ORData.ServProvId.value}`
