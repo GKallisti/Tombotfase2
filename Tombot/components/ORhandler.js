@@ -16,12 +16,12 @@ module.exports = {
       resolved: async (event, context) => {
         let RepeatOrderFlag = context.getVariable('skill.RepeatOrderFlag')
         if (RepeatOrderFlag === true) {
-          context.clearItemValue(LineItemLE);
-          context.clearItemValue(Splittable);
-          context.clearItemValue(ConfirmSp);
-          context.clearItemValue(ServProvId);
-          context.clearItemValue(SourceLoc);
-          context.clearItemValue(DestinationLoc);
+          context.clearItemValue("LineItemLE");
+          context.clearItemValue("Splittable");
+          context.clearItemValue("ConfirmSp");
+          context.clearItemValue("ServProvId");
+          context.clearItemValue("SourceLoc");
+          context.clearItemValue("DestinationLoc");
           
         } else {
         let LineItemLE = context.getItemValue("LineItemLE");
