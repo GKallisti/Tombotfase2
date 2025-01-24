@@ -13,7 +13,7 @@ module.exports = {
        * @param {EntityBaseEvent} event
        * @param {EntityResolutionContext} context
        */
-      resolved: async (event, context) => {
+      init : async (event, context) => {
         let RepeatOrderFlag = context.getVariable('skill.RepeatOrderFlag')
         if (RepeatOrderFlag === true) {
           context.clearItemValue("LineItemLE");
@@ -22,8 +22,15 @@ module.exports = {
           context.clearItemValue("ServProvId");
           context.clearItemValue("SourceLoc");
           context.clearItemValue("DestinationLoc");
-          
-        } else {
+          context.setVariable('skill.RepeatOrderFlag', false );
+          context.logger().info("entro al if de RepeatOrderFlag");
+        }
+      },
+
+
+      resolved: async (event, context) => {
+       
+        context.logger().info("inicio de resolved ORhandler");
         let LineItemLE = context.getItemValue("LineItemLE");
         let Splittable = context.getItemValue("Splittable");
         let restrain = context.getItemValue("ConfirmSp");
@@ -91,12 +98,11 @@ Please confirm the entered information:
           confirmationMessage += `  - ${lineName}: Packaged Item ID: "${line.ID}", Quantity: ${line.quantity}\n`;
         });
         context.addMessage(confirmationMessage);
-        
         context.setVariable('skill.RepeatOrderFlag', true );
         
       }
     },
-    }
+
   }
 
 };
