@@ -4,7 +4,7 @@ const fetch = require('node-fetch'); // Usamos fetch para las llamadas REST
 module.exports = {
   metadata: () => ({
     name: 'restcall',
-    supportedActions: [ 'success']
+    supportedActions: ['success']
   }),
 
   invoke: async (context) => {
@@ -51,7 +51,7 @@ module.exports = {
                       n => n.type === "Integer" && 
                            n.beginOffset > lineItem.endOffset // Debe empezar justo después del ítem
                     );
-                    
+
                     // Si no se encuentra un número, usar un valor predeterminado (opcional)
                     const itemPackageCount = numberItem ? parseInt(numberItem.originalString, 10) : 0;
 
@@ -71,16 +71,25 @@ module.exports = {
         }
       };
 
+      // Cargar variables sensibles desde el entorno
+      const endpoint = context.getVariable('system.config.OTMENDPOINT');
+      const username = context.getVariable('system.config.OTMUSERNAME');
+      const password = context.getVariable('system.config.OTMPASSWORD');
+
+      if (!endpoint || !username || !password) {
+        throw new Error("Missing environment variables for endpoint, username, or password.");
+      }
+
       const headers = {
         "Content-Type": "application/vnd.oracle.resource+json;type=singular",
         Type: "singular"
       };
 
-      const auth = Buffer.from("ONET.INTEGRATIONTOMBOT:iTombot!1152025").toString('base64'); // Codificación en Base64 para la autenticación básica
+      const auth = Buffer.from(`${username}:${password}`).toString('base64'); // Codificación en Base64 para la autenticación básica
       headers.Authorization = `Basic ${auth}`;
 
       const response = await fetch(
-        "https://otmgtm-test-mycotm.otmgtm.us-ashburn-1.ocs.oraclecloud.com/logisticsRestApi/resources-int/v2/transmissions",
+        `${endpoint}/logisticsRestApi/resources-int/v2/transmissions`,
         {
           method: "POST",
           headers: headers,
