@@ -47,7 +47,7 @@ The `restcall` component integrates with the OTM REST API to create Order Releas
 1. **Initialization**: Retrieves the `ORData` variable containing resolved entities.
 2. **Payload Construction**:
    - Builds a JSON payload with order details, including source/destination locations, line items, and optional service provider constraints.
-   - Authenticates using Basic Authentication.
+   - Authenticates using secure custom parameters for environment variables like endpoint, username, and password.
 3. **REST Call Execution**:
    - Sends the payload to the OTM REST API endpoint.
    - Logs and handles errors appropriately.
@@ -69,7 +69,7 @@ The `restcall` component integrates with the OTM REST API to create Order Releas
    ```
 
 3. **Configure Environment**:
-   Update the `domainName`, API endpoint, and authentication details in the `restcall` component.
+   Update the secure custom parameters (e.g., endpoint, username, password) in the `restcall` component's configuration.
 
 4. **Deploy to ODA**:
    - Package the components and deploy them to your Oracle Digital Assistant instance.
@@ -83,7 +83,7 @@ The `restcall` component integrates with the OTM REST API to create Order Releas
 **OTM REST API**:
 - **Endpoint**: `/logisticsRestApi/resources-int/v2/transmissions`
 - **Content Type**: `application/vnd.oracle.resource+json;type=singular`
-- **Authentication**: Basic Authentication (update credentials in the `restcall` component).
+- **Authentication**: Secure custom parameters (update credentials in the `restcall` component's configuration).
 
 ---
 
@@ -114,4 +114,3 @@ Contributions are welcome! Please create a pull request or open an issue for any
 
 ## Author
 Developed by Gisella.
-
